@@ -96,7 +96,6 @@ async def tag(bot, m):
                 mes2,
                 c_time
             ),
-            duration=duration,
             audio="/app/downloads/test.m4a",
             reply_to_message_id=m.message_id
          )
