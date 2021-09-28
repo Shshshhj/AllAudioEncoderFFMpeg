@@ -68,10 +68,10 @@ async def tag(bot, m):
     await mes2.edit("Encoding Audio ... Pls Wait ...")
     ffcmd2 = str(ffcmd.text)
     
-    #out, err, rcode, pid = await execute(f"ffmpeg -i '{file_loc}' -vn -c:s copy '{ffcmd2}' '{file_loc}''{ftype2}' -y")
-    #if rcode != 0:
-    #    await mes2.edit("**Error Occured. See Logs for more info.**")
-    #    print(err)
+    out, err, rcode, pid = await execute(f"ffmpeg -i '{file_loc}' -vn -c:s copy '{ffcmd2}' /temp/music{ftype2} -y")
+    if rcode != 0:
+        await mes2.edit("**Error Occured. See Logs for more info.**")
+        print(err)
 
     
     duration = 0
@@ -81,7 +81,7 @@ async def tag(bot, m):
        
     await mes2.edit("Uploading File ...")
     
-    file_loc2 = str(file_loc) + str(ftype2)
+    file_loc2 = "/temp/music{ftype2}"
     c_time = time.time()    
     
     try:
