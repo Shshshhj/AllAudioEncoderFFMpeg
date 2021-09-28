@@ -66,9 +66,9 @@ async def tag(bot, m):
     
     ffcmd = await bot.ask(m.chat.id,'Enter FFMpeg Commands Starting from -c:a Without output location!', filters=filters.text)
     await mes2.edit("Encoding Audio ... Pls Wait ...")
-    ffcmd2 = ffcmd.text
+    ffcmd2 = '.' + str(ffcmd.text)
     
-    out, err, rcode, pid = await execute(f"ffmpeg -i '{file_loc}' -vn -c:s copy '{ffcmd2}' '{file_loc}''.''{ftype2}' -y")
+    out, err, rcode, pid = await execute(f"ffmpeg -i '{file_loc}' -vn -c:s copy '{ffcmd2}' '{file_loc}''{ftype2}' -y")
     if rcode != 0:
         await mes2.edit("**Error Occured. See Logs for more info.**")
         print(err)
