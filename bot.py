@@ -76,7 +76,7 @@ async def tag(bot, m):
         await mes2.edit("**Error Occured. See Logs for more info.**")
         print(err)
 
-    file_loc2 = "/temp/music" + str(ftype2)
+    #file_loc2 = "/temp/music" + str(ftype2)
     
     #duration = 0
     #metadata = extractMetadata(createParser(file_loc2))
