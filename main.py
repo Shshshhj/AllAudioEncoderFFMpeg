@@ -24,4 +24,4 @@ if __name__ == "__main__":
         workers=300
     )
 
-    app.run()
+    Bot.run()
