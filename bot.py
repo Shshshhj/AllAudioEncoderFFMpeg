@@ -64,6 +64,9 @@ async def tag(bot, m):
         )
     )
     
+    await mes2.edit(f"{file_loc}")
+    return
+    
     ffcmd = await bot.ask(m.chat.id,'Enter FFMpeg Commands Starting from -c:a Without output location!', filters=filters.text)
     await mes2.edit("Encoding Audio ... Pls Wait ...")
     ffcmd2 = str(ffcmd.text)
