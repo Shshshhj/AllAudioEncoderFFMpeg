@@ -10,7 +10,7 @@ import time
 from hachoir.parser import createParser
 from hachoir.metadata import extractMetadata
 from display_progress import progress_for_pyrogram, humanbytes
-from tools import
+from tools import execute
 
 START_TXT = """
 Hi {}, It is an Audio Encoder !
