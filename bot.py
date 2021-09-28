@@ -66,28 +66,22 @@ async def tag(bot, m):
     ffcmd = await bot.ask(m.chat.id,'Enter FFMpeg Commands Starting from -c:a Without output location!', filters=filters.text)
     await mes2.edit("Encoding Audio ... Pls Wait ...")
     
-    out, err, rcode, pid = await execute(f"ffmpeg -i '{file_loc}' -vn '{ffcmd}' '{file_loc}.{ftype.text}' -y")
+    out, err, rcode, pid = await execute(f"ffmpeg -i '{file_loc}' -vn -c:s copy '{ffcmd}' '{file_loc}.{ftype.text}' -y")
     if rcode != 0:
         await message.edit_text("**Error Occured. See Logs for more info.**")
         print(err)
-        await clean_up(dwld_loc, out_loc)
+        await clean_up(file_loc, file_loc)
     
     duration = 0
     metadata = extractMetadata(createParser(file_loc))
     if metadata and metadata.has("duration"):
         duration = metadata.get("duration").seconds
-   
-    if fname.text == ".":
-        fname.text = filename
-    if title.text == ".":
-        title.text = " "
-    if artist.text == ".":
-        artist.text = " "
-    
-    #mes3 = await bot.send_message(m.from_user.id , "**Your Edited Audio is Uploading ... Please wait ...**")
+       
     await mes2.edit("Uploading File ...")
     
+    file_loc2 = str(file_loc) + str(ftype.text)
     c_time = time.time()    
+    
     try:
         await bot.send_audio(
             chat_id=m.chat.id,
@@ -97,19 +91,15 @@ async def tag(bot, m):
                 mes2,
                 c_time
             ),
-            file_name=fname.text,
-            performer=artist.text,
-            title=title.text,
             duration=duration,
-            audio=file_loc,
-            caption=fname.text,
+            audio=file_loc2,
             reply_to_message_id=m.message_id
          )
     except Exception as e:
         print(e)
 
     #await mes3.delete()
-    await bot.send_message(m.from_user.id , f"**New FileName : <code>{fname.text}</code> \n\n New Title = <code>{title.text}</code>\n\n New Artist = <code>{artist.text}</code>**")
+    #await bot.send_message(m.from_user.id , f"**New FileName : <code>{fname.text}</code> \n\n New Title = <code>{title.text}</code>\n\n New Artist = <code>{artist.text}</code>**")
     await bot.send_message(m.from_user.id , f"**Send me New Auido File**")
         
 Bot.run()
