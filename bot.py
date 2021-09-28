@@ -47,7 +47,7 @@ async def tag(bot, m):
     #artist = await bot.ask(m.chat.id,'Enter New Artist(s)', filters=filters.text)
     
     ftype = await bot.ask(m.chat.id,'Enter File Type like aac,mp3,m4a,mka,...', filters=filters.text)
-    ftype2 = ftype.text
+    ftype2 = '.' + str(ftype.text)
     
     c_time = time.time()
     mes2 = await m.reply_text(
@@ -66,7 +66,7 @@ async def tag(bot, m):
     
     ffcmd = await bot.ask(m.chat.id,'Enter FFMpeg Commands Starting from -c:a Without output location!', filters=filters.text)
     await mes2.edit("Encoding Audio ... Pls Wait ...")
-    ffcmd2 = '.' + str(ffcmd.text)
+    ffcmd2 = str(ffcmd.text)
     
     out, err, rcode, pid = await execute(f"ffmpeg -i '{file_loc}' -vn -c:s copy '{ffcmd2}' '{file_loc}''{ftype2}' -y")
     if rcode != 0:
@@ -81,7 +81,7 @@ async def tag(bot, m):
        
     await mes2.edit("Uploading File ...")
     
-    file_loc2 = str(file_loc) + str(ftype.text)
+    file_loc2 = str(file_loc) + str(ftype2)
     c_time = time.time()    
     
     try:
