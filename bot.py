@@ -10,6 +10,7 @@ import time
 from hachoir.parser import createParser
 from hachoir.metadata import extractMetadata
 from display_progress import progress_for_pyrogram, humanbytes
+from tools import execute, clean_up
 
 
 BOT_TOKEN = os.environ.get("BOT_TOKEN")
@@ -24,12 +25,10 @@ Bot = Client(
 )
 
 START_TXT = """
-Hi {}, I am Music Editor Bot.
-I can change the music tags and artwork.
-Send a music to get started.
+Hi {}, It is an Audio Encoder !
 
-If You Dont want to Change any Item,
-just send a dot "." when bot asked for it.
+you can send ffmpeg script 
+from <-c:a> and all sound options.
 """
 
 @Bot.on_message(filters.command(["start"]))
@@ -39,19 +38,15 @@ async def start(bot, update):
    
 @Bot.on_message(filters.private & (filters.audio | filters.document))
 async def tag(bot, m):
-    #media = m.reply_to_message
     filetype = m.audio or m.document
     filename = filetype.file_name
-    #c_time = time.time()
-    mes1 = await bot.send_message(m.from_user.id , f"**Current FileName is =\n\n<code>{filename}</code>**")
+    mes1 = await bot.send_message(m.from_user.id , f"**FileName is =\n\n<code>{filename}</code>**")
 
-    #title = None
-    #artist = None
-    #thumb = None
-
-    fname = await bot.ask(m.chat.id,'Enter New Filename', filters=filters.text)
-    title = await bot.ask(m.chat.id,'Enter New Title', filters=filters.text)
-    artist = await bot.ask(m.chat.id,'Enter New Artist(s)', filters=filters.text)
+    #fname = await bot.ask(m.chat.id,'Enter New Filename', filters=filters.text)
+    #title = await bot.ask(m.chat.id,'Enter New Title', filters=filters.text)
+    #artist = await bot.ask(m.chat.id,'Enter New Artist(s)', filters=filters.text)
+    
+    ftype = await bot.ask(m.chat.id,'Enter File Type like aac,mp3,m4a,mka,...', filters=filters.text)
     
     c_time = time.time()
     mes2 = await m.reply_text(
@@ -67,6 +62,15 @@ async def tag(bot, m):
             c_time
         )
     )
+    
+    ffcmd = await bot.ask(m.chat.id,'Enter FFMpeg Commands Starting from -c:a Without output location!', filters=filters.text)
+    await mes2.edit("Encoding Audio ... Pls Wait ...")
+    
+    out, err, rcode, pid = await execute(f"ffmpeg -i '{file_loc}' -vn '{ffcmd}' '{file_loc}.{ftype.text}' -y")
+    if rcode != 0:
+        await message.edit_text("**Error Occured. See Logs for more info.**")
+        print(err)
+        await clean_up(dwld_loc, out_loc)
     
     duration = 0
     metadata = extractMetadata(createParser(file_loc))
