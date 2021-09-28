@@ -7,6 +7,9 @@ from pyrogram import Client
 
 #from config import Config
 
+BOT_TOKEN = os.environ.get("BOT_TOKEN")
+API_ID = os.environ.get("API_ID")
+API_HASH = os.environ.get("API_HASH")
 
 if __name__ == "__main__":
     plugins = dict(
