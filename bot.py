@@ -81,7 +81,7 @@ async def tag(bot, m):
        
     await mes2.edit("Uploading File ...")
     
-    file_loc2 = "/temp/music{ftype2}"
+    file_loc2 = "/temp/music" + str(ftype2)
     c_time = time.time()    
     
     try:
