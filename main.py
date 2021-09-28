@@ -15,7 +15,7 @@ if __name__ == "__main__":
     plugins = dict(
         root="plugins"
     )
-    Bot = Client(
+    app = Client(
         "Bot",
         bot_token = BOT_TOKEN,
         api_id = API_ID,
@@ -24,4 +24,4 @@ if __name__ == "__main__":
         workers=300
     )
 
-    Bot.run()
+    app.run()
