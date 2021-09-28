@@ -46,8 +46,8 @@ async def tag(bot, m):
     #title = await bot.ask(m.chat.id,'Enter New Title', filters=filters.text)
     #artist = await bot.ask(m.chat.id,'Enter New Artist(s)', filters=filters.text)
     
-    ftype = await bot.ask(m.chat.id,'Enter File Type like aac,mp3,m4a,mka,...', filters=filters.text)
-    ftype2 = '.' + str(ftype.text)
+    #ftype = await bot.ask(m.chat.id,'Enter File Type like aac,mp3,m4a,mka,...', filters=filters.text)
+    #ftype2 = '.' + str(ftype.text)
     
     c_time = time.time()
     mes2 = await m.reply_text(
@@ -64,26 +64,26 @@ async def tag(bot, m):
         )
     )
     
-    await mes2.edit(f"{file_loc}")
-    return
+    #await mes2.edit(f"{file_loc}")
+    #return
     
     ffcmd = await bot.ask(m.chat.id,'Enter FFMpeg Commands Starting from -c:a Without output location!', filters=filters.text)
     await mes2.edit("Encoding Audio ... Pls Wait ...")
     ffcmd2 = str(ffcmd.text)
     
-    out, err, rcode, pid = await execute(f"ffmpeg -i '{file_loc}' -vn -c:s copy '{ffcmd2}' /temp/music{ftype2} -y")
+    out, err, rcode, pid = await execute(f"ffmpeg -i '{file_loc}' -vn -c:s copy '{ffcmd2}' /app/downloads/test.m4a -y")
     if rcode != 0:
         await mes2.edit("**Error Occured. See Logs for more info.**")
         print(err)
 
     file_loc2 = "/temp/music" + str(ftype2)
     
-    duration = 0
-    metadata = extractMetadata(createParser(file_loc2))
-    if metadata and metadata.has("duration"):
-        duration = metadata.get("duration").seconds
+    #duration = 0
+    #metadata = extractMetadata(createParser(file_loc2))
+    #if metadata and metadata.has("duration"):
+    #    duration = metadata.get("duration").seconds
     
-    await mes2.edit(f"duration is: {duration}")
+    #await mes2.edit(f"duration is: {duration}")
     #await mes2.edit("Uploading File ...")
     
     c_time = time.time()    
@@ -97,7 +97,7 @@ async def tag(bot, m):
                 c_time
             ),
             duration=duration,
-            audio=file_loc2,
+            audio="/app/downloads/test.m4a",
             reply_to_message_id=m.message_id
          )
     except Exception as e:
