@@ -1,6 +1,7 @@
 import os
 import io
-from pyrogram import Client, filters
+from pyrogram import filters
+from pyrogram import Client as Bot
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 from pyromod import listen
 from PIL import Image
