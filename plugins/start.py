@@ -19,7 +19,7 @@ you can send ffmpeg script
 from <-c:a> and all sound options.
 """
 
-@Bot.on_message(filters.command(["start"]))
-async def start(bot, update):
+@Bot.on_message(filters.command(["start"]) & filters.private)
+async def start(Client , m):
     text = START_TXT.format(update.from_user.mention)
-    await update.reply_text(text=text)
+    await m.reply_text(text=text)
