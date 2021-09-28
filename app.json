@@ -1,5 +1,6 @@
 {
-  "name": "MusicEditor",
+  "name": "All Audio Converter",
+  "repository": "https://github.com/prxpostern/AllAudioEncoderFFMpeg",
   "env": {
     "API_ID": {
       "description": "Add your telegram API_ID",
@@ -14,9 +15,19 @@
       "value": ""
 }
   },
+  "addons": [],
   "buildpacks": [
-    {
-      "url": "heroku/python"
+        {
+            "url": "heroku/python"
+        },
+        {
+            "url": "https://github.com/jonathanong/heroku-buildpack-ffmpeg-latest"
+        }
+    ],
+    "formation": {
+        "worker": {
+            "quantity": 1,
+            "size": "free"
+        }
     }
-  ]
 }
