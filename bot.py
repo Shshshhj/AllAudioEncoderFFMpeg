@@ -73,17 +73,17 @@ async def tag(bot, m):
         await mes2.edit("**Error Occured. See Logs for more info.**")
         print(err)
 
+    file_loc2 = "/temp/music" + str(ftype2)
     
     duration = 0
-    metadata = extractMetadata(createParser(file_loc))
+    metadata = extractMetadata(createParser(file_loc2))
     if metadata and metadata.has("duration"):
         duration = metadata.get("duration").seconds
-       
-    await mes2.edit("Uploading File ...")
     
-    file_loc2 = "/temp/music" + str(ftype2)
+    await mes2.edit(f"duration is: {duration}")
+    #await mes2.edit("Uploading File ...")
+    
     c_time = time.time()    
-    
     try:
         await bot.send_audio(
             chat_id=m.chat.id,
