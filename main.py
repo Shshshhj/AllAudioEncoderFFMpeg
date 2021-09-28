@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 # @trojanzhex
 
-
+import os
 from pyrogram import Client
 
 #from config import Config
