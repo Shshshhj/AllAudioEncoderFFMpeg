@@ -68,7 +68,7 @@ async def tag(bot, m):
     
     out, err, rcode, pid = await execute(f"ffmpeg -i '{file_loc}' -vn -c:s copy '{ffcmd}' '{file_loc}.{ftype.text}' -y")
     if rcode != 0:
-        await message.edit_text("**Error Occured. See Logs for more info.**")
+        await mes2.edit("**Error Occured. See Logs for more info.**")
         print(err)
         await clean_up(file_loc, file_loc)
     
