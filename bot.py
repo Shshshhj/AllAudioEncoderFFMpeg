@@ -10,7 +10,7 @@ import time
 from hachoir.parser import createParser
 from hachoir.metadata import extractMetadata
 from display_progress import progress_for_pyrogram, humanbytes
-from tools import execute, clean_up
+from tools import execute
 
 
 BOT_TOKEN = os.environ.get("BOT_TOKEN")
@@ -70,7 +70,7 @@ async def tag(bot, m):
     if rcode != 0:
         await mes2.edit("**Error Occured. See Logs for more info.**")
         print(err)
-        await clean_up(file_loc, file_loc)
+
     
     duration = 0
     metadata = extractMetadata(createParser(file_loc))
